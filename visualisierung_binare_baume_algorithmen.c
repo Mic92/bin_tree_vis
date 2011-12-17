@@ -107,8 +107,8 @@ void print_element(Ptr tree, int height, int **arr, int x, int y){
 		
 	arr[x][y] = tree->key;
 	
-	print_element(tree->left, height, arr, x - (height-y) +1, y+1);
-	print_element(tree->right, height, arr, x + (height-y) +1, y+1);
+	print_element(tree->left, height, arr, x - (height - y), y+1);
+	print_element(tree->right, height, arr, x + (height - y), y+1);
 }
 
 int heigth(Ptr tree){	
@@ -133,14 +133,14 @@ void print(Ptr tree){
 	printf("%i \n", vis_w);
 	
 	// 2 dim. array
-	int** arr = malloc( h*sizeof(int**) ); 
+	int** arr = malloc( vis_w*sizeof(int**) ); 
     if ( !arr ){ 
         printf("error: out of memory"); return; 
     } 
 
 	int i;
-    for ( i=0; i<h; i++ ) { 
-        arr[i] = malloc( vis_w*sizeof(int)); 
+    for ( i=0; i<vis_w; i++ ) { 
+        arr[i] = malloc( h*sizeof(int)); 
         if ( !arr[i]) break; 
     }
      if ( i<h ) { 
@@ -154,15 +154,15 @@ void print(Ptr tree){
       
 	
 	// array füllen:
-	for(i = 0; i< h; i++){
-		int k;
-		for(k = 0; k<vis_w; k++){
-			arr[k][i] = -1;
+	int x,y;
+	for(y = 0; y< h; y++){
+		for(x = 0; x<vis_w; x++){
+			arr[x][y] = -1;
 		}
 	}
-	//print_element(tree, h, arr, vis_w/2, 0);
+	print_element(tree, h, arr, ((vis_w-1)/2)+1, 0);
 	
-	/*
+	
 	// array anzeigen
 	for(i = 0; i< h; i++){
 		int k;
@@ -174,7 +174,6 @@ void print(Ptr tree){
 		}
 		printf("\n");
 	}
-	*/
 	
 }
 
@@ -188,11 +187,11 @@ int main(){
 	
 	
 	int i;
-	for(i = 1; i<3; i++){
+	for(i = 1; i<4; i++){
 		einfuegen(&tree, i);
 	}
 		
-	for(i = 0; i<3; i++){
+	for(i = 0; i<4; i++){
 		suche(tree, i);
 	}
 	
