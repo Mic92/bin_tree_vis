@@ -2,8 +2,11 @@
 #include <stdlib.h>
 
 #define EMPTY 1111			// Konstante, die für leere Elemente eingetragen wird; darf nicht als Element des Baumes verwendet werden
-#define MAXCHAR "%2i" 		// als Zahl eintragen, wie viele Ziffern pro Element angezeit werden sollen
-#define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXCHAR passen  
+#define MAXchar 2			// Wie viele Ziffern pro Element angezeit werden sollen
+#define MAXCHAR "%02i" 		// als Zahl MAXchar eintragen
+#define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXchar passen  
+
+#define DEBUG 1
 
 typedef struct Nodeelem *Ptr;
 typedef struct Nodeelem{
@@ -91,7 +94,7 @@ int vis_width(int height){
 		w*=2;
 	}
 	
-	return 2*w-2;
+	return (2*w-1)*MAXchar;
 }
 
 void print_element(Ptr tree, int **arr, int min, int max, int y){
@@ -108,14 +111,14 @@ void print_element(Ptr tree, int **arr, int min, int max, int y){
 		
 	arr[middle][y] = tree->key;
 	
-	print_element(tree->left , arr, middle +1, max,  y+1);
-	print_element(tree->right, arr, min, middle -1, y+1);
+	print_element(tree->right , arr, middle +1, max,  y+1);
+	print_element(tree->left, arr, min, middle -1, y+1);
 }
 
 int height(Ptr tree){	
 	if(tree==NULL)
 		return 0;
-	return 1 + height(tree->right) + height(tree->left);
+	return 1 +  (   height(tree->right)>height(tree->left) ?  height(tree->right) :height(tree->left) ); // 1 + maximale Höhe von Kindern
 }
 	
 	
@@ -123,12 +126,16 @@ int height(Ptr tree){
 // stellt Baum von oben(Wurzel) nach unten dar
 void print(Ptr tree){
 	int h = height(tree);
-	printf("calculated height:");
-	printf("%i \n", h);
+
 	
 	int vis_w = vis_width(h);
-	printf("calculated vis_width:");
-	printf("%i \n", vis_w);
+	
+	if(DEBUG){
+		printf("calculated height:");
+		printf("%i \n", h);
+		printf("calculated vis_width:");
+		printf("%i \n", vis_w);
+	}
 	
 	// 2 dim. array
 	int** arr = malloc( vis_w*sizeof(int**) ); 
@@ -173,29 +180,36 @@ void print(Ptr tree){
 		printf("\n");
 	}
 	
+	
+    // Speicher Leck verhindern 
+    for ( i=0; i<vis_w; i++ ) 
+    { 
+        free(arr[i]); // Spalten freigeben 
+    } 
+    free(arr); // Zeilenzeiger freigeben 
+
 }
 
 
 int main(){
+	printf("Debugging is ");
+	printf(DEBUG ? "enabled" : "disabled");
+	printf("\n\n");
+	
+	// Baum initialisieren
 	Ptr tree = (Ptr) malloc(sizeof(Node));
 	tree->left = NULL;
 	tree->right = NULL;
-	tree->key = 0;
+	tree->key = 0;	
 	
-	
-	
+	// Baum mit Daten füllen
 	int i;
-	for(i = 1; i<3; i++){
+	for(i = 0; i<5; i++){
 		einfuegen(&tree, i);
-		einfuegen(&tree, -2*i);
+		einfuegen(&tree, -i);
+	}
 
-	}
-	
-		
-	for(i = -10; i<10; i++){
-		suche(tree, i);
-	}
-	
+	// Wieder etwas löschen
 	//printf("\n\n Deleting 19 \n\n");
 	//node_del(tree, 10);
 	
@@ -203,8 +217,6 @@ int main(){
 		suche(tree, i);
 	}*/
 	
-	
-	printf("\n\n\n\n\n\n\n\n");
 	print(tree);
 	
 	return 1;
