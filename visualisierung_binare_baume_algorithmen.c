@@ -6,7 +6,7 @@
 #define MAXCHAR "%02i" 		// als Zahl MAXchar eintragen
 #define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXchar passen  
 
-#define DEBUG 0				// Debugging Modus einschalten/auschalten
+#define DEBUG 1				// Debugging Modus einschalten/auschalten
 
 typedef struct Nodeelem *Ptr;
 typedef struct Nodeelem{
@@ -30,21 +30,21 @@ void suche(Ptr t, int x){
 	}
 }
 
-void einfuegen(Ptr *t, int x){
+void einfuegen(Ptr t, int x){
 	Ptr q;
 	
-	if(*t == NULL){
+	if(t == NULL){
 		q = (Ptr) malloc(sizeof(Node));
 		q->key = x;
 		q->left = NULL;
 		q->right = NULL;
-		*t = q;
+		t = q;
 	}else{
-		if ( (*t)->key == x){
+		if ( t->key == x){
 			if(DEBUG) printf("Element schon im Baum\n");
 		}else{
-			if( (*t)->key < x) einfuegen( &((*t)->right), x);
-			else einfuegen( &((*t)->left), x);
+			if( t->key < x) einfuegen( t->right, x);
+			else einfuegen( t->left, x);
 		}
 	}
 }
@@ -64,21 +64,19 @@ void node_del(Ptr tree, int key){
 	}
 	
 	if(tree->left == NULL && tree->right == NULL){
-		if(DEBUG) printf("\nDeleting leaf(no child), key: %i \n", key);
+		if(DEBUG) printf("\n\n Deleting leaf(no child), key: %i \n\n", key);
 		free(tree);
 		tree = NULL;		
 	}else if(tree->right == NULL || tree->left == NULL){
-		if(DEBUG) printf("\n Deleting Node with one child, key: %i \n", key);
-		Ptr neu;
+		if(DEBUG) printf("\n\n Deleting Node with one child, key: %i \n\n", key);
 		Ptr old = tree;
 		if(tree->right == NULL)
-			neu = tree->left;
+			tree = tree->left;
 		else
-			neu = tree->right;
-		tree = neu;
+			tree = tree->right;
 		free(old);	
 	}else{
-		if(DEBUG) printf("\n Deleting Node with two children, key: %i \n", key);
+		if(DEBUG) printf("\n\n Deleting Node with two children, key: %i \n\n", key);
 		Ptr old = tree;
 		tree = old->left;
 		old->left->right = old->right;
@@ -229,18 +227,17 @@ int main(){
 	
 	// Baum mit Daten füllen
 	int i;
-	for(i = 0; i<5; i++){
-		einfuegen(&tree, i);
-		einfuegen(&tree, -i);
+	for(i = 0; i<3; i++){
+		einfuegen(tree, i);
+		einfuegen(tree, -i);
 	}
+	einfuegen(tree, 3);
+
+	//print(tree);
 
 	// Wieder etwas löschen
-	//node_del(tree, 10);
-	
-	/*for(i = 0; i<3; i++){
-		suche(tree, i);
-	}*/
-	
+	node_del(tree, 3);
+
 	print(tree);
 	
 	return 1;
