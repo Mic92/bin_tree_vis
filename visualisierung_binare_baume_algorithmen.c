@@ -11,7 +11,8 @@
 typedef struct Nodeelem *Ptr;
 typedef struct Nodeelem{
 	int key;
-	Ptr left, right;
+	int balance;
+	Ptr parent, left, right;
 	} Node;
 	
 
@@ -33,56 +34,40 @@ void suche(Ptr t, int x){
 void einfuegen(Ptr t, int x){
 	Ptr q;
 	
-	if(t == NULL){
-		q = (Ptr) malloc(sizeof(Node));
-		q->key = x;
-		q->left = NULL;
-		q->right = NULL;
-		t = q;
-	}else{
-		if ( t->key == x){
-			if(DEBUG) printf("Element schon im Baum\n");
+	// Fall 1: Element schon im Baum
+	if(t->key == x){
+		if(DEBUG) printf("Element schon im Baum\n");
+		return;
+	}
+	// Fall 2: Element muss rechts eingefügt werden
+	if(t->key > x){
+		// Fall 2a: kein Nachfolger, direktes Einfügen
+		if(t->right != NULL){
+			einfuegen(t->right, x);
+		// Fall 2b: Nachfolger vorhanden, kein direktes Einfügen
 		}else{
-			if( t->key < x) einfuegen( t->right, x);
-			else einfuegen( t->left, x);
+			q = (Ptr) malloc(sizeof(Node));
+			q->key = x;
+			q->left = NULL;
+			q->right = NULL;
+			t->right = q;
+		}
+	// Fall 3: Element muss links eingefügt werden	
+	}else{
+		// Fall 3a: kein Nachfolger, direktes Einfügen
+		if(t->left != NULL){
+			einfuegen(t->left, x);
+		// Fall 3b: Nachfolger vorhanden, kein direktes Einfügen
+		}else{
+			q = (Ptr) malloc(sizeof(Node));
+			q->key = x;
+			q->left = NULL;
+			q->right = NULL;
+			t->left = q;
 		}
 	}
 }
 
-void node_del(Ptr tree, int key){	
-	if(tree == NULL)
-		return;
-	
-	if(tree->key != key){
-		if(tree->key<key){
-			node_del(tree->right, key);
-			return;
-		}else{
-			node_del(tree->left, key);
-			return;
-		}	
-	}
-	
-	if(tree->left == NULL && tree->right == NULL){
-		if(DEBUG) printf("\n\n Deleting leaf(no child), key: %i \n\n", key);
-		free(tree);
-		tree = NULL;		
-	}else if(tree->right == NULL || tree->left == NULL){
-		if(DEBUG) printf("\n\n Deleting Node with one child, key: %i \n\n", key);
-		Ptr old = tree;
-		if(tree->right == NULL)
-			tree = tree->left;
-		else
-			tree = tree->right;
-		free(old);	
-	}else{
-		if(DEBUG) printf("\n\n Deleting Node with two children, key: %i \n\n", key);
-		Ptr old = tree;
-		tree = old->left;
-		old->left->right = old->right;
-		free(old);
-	}
-}
 
 
 /**
@@ -232,11 +217,6 @@ int main(){
 		einfuegen(tree, -i);
 	}
 	einfuegen(tree, 3);
-
-	//print(tree);
-
-	// Wieder etwas löschen
-	node_del(tree, 3);
 
 	print(tree);
 	
