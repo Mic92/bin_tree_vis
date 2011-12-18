@@ -1,13 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define EMPTY 1111			// Konstante, die für leere Elemente eingetragen wird; darf nicht als Element des Baumes verwendet werden
+#define MAXCHAR "%2i" 		// als Zahl eintragen, wie viele Ziffern pro Element angezeit werden sollen
+#define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXCHAR passen  
+
 typedef struct Nodeelem *Ptr;
 typedef struct Nodeelem{
 	int key;
 	Ptr left, right;
 	} Node;
 	
-Ptr p;
 
 void suche(Ptr t, int x){
 	if( t==NULL){
@@ -80,55 +83,50 @@ void node_del(Ptr tree, int key){
 	}
 }
 
-// Breite des Baumes
-int width(int height){
-	if(height == 1)
-		return 1;
-	return 2*(height-1);
-}
 
 // tatsächliche(dargestellte) Breite des Baumes
-int vis_width(int heigth){
-	
-	int i, w=0;
-	for( i = 1; i<=heigth; i++){
-		w+=width(i);
+int vis_width(int height){
+	int i, w=1;
+	for( i = 1; i<height; i++){
+		w*=2;
 	}
-
-	return w;
+	
+	return 2*w-2;
 }
 
-void print_element(Ptr tree, int height, int **arr, int x, int y){
+void print_element(Ptr tree, int **arr, int min, int max, int y){
 	if(tree == NULL)
 		return;	
 		
 	printf("printing element; element key: %i\n", tree->key);	
-	printf("x: %i, y: %i\n\n", x, y);
-		
-	arr[x][y] = tree->key;
+	printf("min: %i, max: %i, y: %i \n", min, max, y);
 	
-	print_element(tree->left, height, arr, x - (height - y), y+1);
-	print_element(tree->right, height, arr, x + (height - y), y+1);
+	int middle = min + (max-min+1)/2;
+	
+	printf("middle: %i \n\n", middle);
+
+		
+	arr[middle][y] = tree->key;
+	
+	print_element(tree->left , arr, middle +1, max,  y+1);
+	print_element(tree->right, arr, min, middle -1, y+1);
 }
 
-int heigth(Ptr tree){	
+int height(Ptr tree){	
 	if(tree==NULL)
 		return 0;
-	return 1 + heigth(tree->right) + heigth(tree->left);
+	return 1 + height(tree->right) + height(tree->left);
 }
 	
 	
 
 // stellt Baum von oben(Wurzel) nach unten dar
 void print(Ptr tree){
-	int h = heigth(tree);
+	int h = height(tree);
 	printf("calculated height:");
 	printf("%i \n", h);
 	
-	int w = width(h);
 	int vis_w = vis_width(h);
-	printf("calculated width:");
-	printf("%i \n", w);
 	printf("calculated vis_width:");
 	printf("%i \n", vis_w);
 	
@@ -157,20 +155,20 @@ void print(Ptr tree){
 	int x,y;
 	for(y = 0; y< h; y++){
 		for(x = 0; x<vis_w; x++){
-			arr[x][y] = -1;
+			arr[x][y] = EMPTY;
 		}
 	}
-	print_element(tree, h, arr, ((vis_w-1)/2)+1, 0);
+	print_element(tree, arr, 0, vis_w, 0);
 	
 	
 	// array anzeigen
 	for(i = 0; i< h; i++){
 		int k;
 		for(k = 0; k<vis_w; k++){
-			if(arr[k][i]== -1)
-				printf("#");
+			if(arr[k][i]== EMPTY)
+				printf(EMPTY_STRING);
 			else
-				printf("%i", arr[k][i]);
+				printf(MAXCHAR, arr[k][i]);
 		}
 		printf("\n");
 	}
@@ -187,11 +185,14 @@ int main(){
 	
 	
 	int i;
-	for(i = 1; i<4; i++){
+	for(i = 1; i<3; i++){
 		einfuegen(&tree, i);
+		einfuegen(&tree, -2*i);
+
 	}
+	
 		
-	for(i = 0; i<4; i++){
+	for(i = -10; i<10; i++){
 		suche(tree, i);
 	}
 	
