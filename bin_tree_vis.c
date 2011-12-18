@@ -183,7 +183,7 @@ void print(Ptr tree){
 				printf(MAXCHAR, arr[k][i]);
 		}
 		// Neue Zeile für jede neue Baumebene
-			printf("\n");
+			printf("\n\n");
 	}
 	printf("\n"); // Leerzeilen nach Baum
 
