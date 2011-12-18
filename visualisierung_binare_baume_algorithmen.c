@@ -99,6 +99,10 @@ int vis_width(int height){
 	return (2*w-1)*MAXchar;
 }
 
+/**
+ * Setzt rekursiv die einzelnen Werte des Binären Baumes in das übergebene
+ * Array.
+ */ 
 void print_element(Ptr tree, int **arr, int min, int max, int y){
 	// Rekursionsabbruch
 	if(tree == NULL)
@@ -122,21 +126,30 @@ void print_element(Ptr tree, int **arr, int min, int max, int y){
 	print_element(tree->left, arr, min, middle -1, y+1);
 }
 
-int height(Ptr tree){	
+/**
+ * Rekursive Berechnung der Höhe des Baumes
+ */ 
+int height(Ptr tree){
+	// Rekursionsabbruch	
 	if(tree==NULL)
 		return 0;
-	return 1 +  (   height(tree->right)>height(tree->left) ?  height(tree->right) :height(tree->left) ); // 1 + maximale Höhe von Kindern
+	
+	// Rückgabe von 1 + maximale Höhe von Kindern
+	return 1 +  (   height(tree->right)>height(tree->left) ?  height(tree->right) :height(tree->left) ); 
 }
 	
 	
 
-// stellt Baum von oben(Wurzel) nach unten dar
+/**
+ * Stellt den übergebenen Binären Baum in der Konsole dar.
+ */ 
 void print(Ptr tree){
-	int h = height(tree);
-
 	
+	// Höhe und Breite berechnen
+	int h = height(tree);
 	int vis_w = vis_width(h);
 	
+	// Debugging Infos
 	if(DEBUG){
 		printf("calculated height:");
 		printf("%i \n", h);
@@ -144,7 +157,7 @@ void print(Ptr tree){
 		printf("%i \n", vis_w);
 	}
 	
-	// 2 dim. array
+	// 2 dimensionales Array dynamisch Allocieren
 	int** arr = malloc( vis_w*sizeof(int**) ); 
     if ( !arr ){ 
         printf("error: out of memory"); return; 
@@ -165,17 +178,19 @@ void print(Ptr tree){
 
       
 	
-	// array füllen:
+	// Array mit leeren Daten füllen
 	int x,y;
 	for(y = 0; y< h; y++){
 		for(x = 0; x<vis_w; x++){
 			arr[x][y] = EMPTY;
 		}
 	}
+	
+	// Jetzt rekursiv Array mit tatsächlichen Daten füllen
 	print_element(tree, arr, 0, vis_w, 0);
 	
-	
-	// array anzeigen
+	// Array anzeigen
+	printf("\n\n");		// Leerzeilen vor Baum
 	for(i = 0; i< h; i++){
 		int k;
 		for(k = 0; k<vis_w; k++){
@@ -184,13 +199,14 @@ void print(Ptr tree){
 			else
 				printf(MAXCHAR, arr[k][i]);
 		}
-		printf("\n");
+		// Neue Zeile für jede neue Baumebene
+			printf("\n");
 	}
+	printf("\n"); // Leerzeilen nach Baum
+
 	
-	
-    // Speicher Leck verhindern 
-    for ( i=0; i<vis_w; i++ ) 
-    { 
+    // Memory Leak verhindern 
+    for ( i=0; i<vis_w; i++ ){ 
         free(arr[i]); // Spalten freigeben 
     } 
     free(arr); // Zeilenzeiger freigeben 
