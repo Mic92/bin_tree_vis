@@ -64,11 +64,11 @@ void node_del(Ptr tree, int key){
 	}
 	
 	if(tree->left == NULL && tree->right == NULL){
-		if(DEBUG) printf("\nDeleting LEAF\n”");
+		if(DEBUG) printf("\nDeleting leaf(no child), key: %i \n", key);
 		free(tree);
 		tree = NULL;		
 	}else if(tree->right == NULL || tree->left == NULL){
-		if(DEBUG) printf("\nONE child\n”");
+		if(DEBUG) printf("\n Deleting Node with one child, key: %i \n", key);
 		Ptr neu;
 		Ptr old = tree;
 		if(tree->right == NULL)
@@ -78,7 +78,7 @@ void node_del(Ptr tree, int key){
 		tree = neu;
 		free(old);	
 	}else{
-		if(DEBUG) printf("\ntwo children\n”");
+		if(DEBUG) printf("\n Deleting Node with two children, key: %i \n", key);
 		Ptr old = tree;
 		tree = old->left;
 		old->left->right = old->right;
@@ -235,7 +235,6 @@ int main(){
 	}
 
 	// Wieder etwas löschen
-	//eprintf("\n\n Deleting 19 \n\n");
 	//node_del(tree, 10);
 	
 	/*for(i = 0; i<3; i++){
