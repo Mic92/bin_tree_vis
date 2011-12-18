@@ -28,8 +28,7 @@ void suche(Ptr t, int x){
 
 /**
  * Funktion zum Einfügen. 
- * Achtung: Fügt nur an Knoten ohne Kindknoten ein, nicht für
- * AVL Bäume geeignet.
+ * Achtung: Nicht für AVL Bäume geeignet.
  */ 
 void einfuegen(Ptr t, int x){
 	Ptr q;
