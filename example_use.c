@@ -1,20 +1,22 @@
 #include "bin_tree_vis.c"
+// Debugging aktivieren
+//#define DEBUG
 
 int main(){
-	printf("Debugging is ");
-	printf(DEBUG ? "enabled" : "disabled");
-	printf("\n\n");
-	
+#ifdef DEBUG
+        printf("Debugging is enabled");
+#endif
+
 	// Baum initialisieren
 	Ptr tree = (Ptr) malloc(sizeof(Node));
 	tree->left = NULL;
 	tree->right = NULL;
-	tree->key = 10;	
-	
+	tree->key = 10;
+
 	// Baum mit Daten füllen
 	// (Reihenfolge ist wichtig, damit ein "schöner Baum" erzeugt wird,
 	// da Baum unbalanciert ist
-	
+
 	// links
 	einfuegen(tree, 5);
 	einfuegen(tree, 3);
@@ -23,7 +25,7 @@ int main(){
 	einfuegen(tree, 6);
 	einfuegen(tree, 8);
 	einfuegen(tree, 4);
-	
+
 	// rechts
 	einfuegen(tree, 15);
 	einfuegen(tree, 13);
@@ -37,6 +39,6 @@ int main(){
 	printf("Ein einfacher Binärer Baum");
 	print(tree);
 
-	
+
 	return 1;
 }
