@@ -41,7 +41,7 @@ void einfuegen(Ptr *t, int x){
 		*t = q;
 	}else{
 		if ( (*t)->key == x){
-			printf("Element schon im Baum\n");
+			if(DEBUG) printf("Element schon im Baum\n");
 		}else{
 			if( (*t)->key < x) einfuegen( &((*t)->right), x);
 			else einfuegen( &((*t)->left), x);
@@ -64,11 +64,11 @@ void node_del(Ptr tree, int key){
 	}
 	
 	if(tree->left == NULL && tree->right == NULL){
-		printf("\nDeleting LEAF\n”");
+		if(DEBUG) printf("\nDeleting LEAF\n”");
 		free(tree);
 		tree = NULL;		
 	}else if(tree->right == NULL || tree->left == NULL){
-		printf("\nONE child\n”");
+		if(DEBUG) printf("\nONE child\n”");
 		Ptr neu;
 		Ptr old = tree;
 		if(tree->right == NULL)
@@ -78,7 +78,7 @@ void node_del(Ptr tree, int key){
 		tree = neu;
 		free(old);	
 	}else{
-		printf("\ntwo children\n”");
+		if(DEBUG) printf("\ntwo children\n”");
 		Ptr old = tree;
 		tree = old->left;
 		old->left->right = old->right;
@@ -157,18 +157,20 @@ void print(Ptr tree){
 		printf("%i \n", vis_w);
 	}
 	
-	// 2 dimensionales Array dynamisch Allocieren
-	int** arr = malloc( vis_w*sizeof(int**) ); 
-    if ( !arr ){ 
-        printf("error: out of memory"); return; 
-    } 
+	// 2 dimensionales Array dynamisch erzeugen
+	int** arr = malloc( vis_w*sizeof(int**) ); 	// erst Reihen reservieren
+    // Fehlerbehandlung
+    if(!arr){ printf("error: out of memory"); return; } 
 
+	// Jetzt Zeilen reservieren
 	int i;
-    for ( i=0; i<vis_w; i++ ) { 
+    for( i=0; i<vis_w; i++ ){ 
         arr[i] = malloc( h*sizeof(int)); 
         if ( !arr[i]) break; 
     }
-     if ( i<h ) { 
+    
+    // Fehlerbehandlung
+    if(i<h){ 
         printf("error: out of memory"); return; 
         int j;
         for ( j=0; j<=i; j++ ) free ( arr[j] ); 
