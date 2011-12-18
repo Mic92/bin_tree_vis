@@ -142,24 +142,26 @@ void print(Ptr tree){
 
 	// 2 dimensionales Array dynamisch erzeugen
 	int** arr = malloc( w*sizeof(int**) ); 	// erst Reihen reservieren
-    // Fehlerbehandlung
-    if(!arr){ printf("error: out of memory"); return; }
+        // Fehlerbehandlung
+        if(!arr){ printf("error: out of memory"); return; }
 
-	// Jetzt Zeilen reservieren
-	int i;
-    for( i=0; i<w; i++ ){ 
-        arr[i] = malloc( h*sizeof(int)); 
-        if ( !arr[i]) break; 
-    }
+        // Jetzt Zeilen reservieren
+        int i;
+        for( i=0; i<w; i++ ){
+                arr[i] = malloc( h*sizeof(int));
+                if ( !arr[i]) break;
+        }
 
-    // Fehlerbehandlung
-    if(i<h){ 
-        printf("error: out of memory"); return; 
-        int j;
-        for ( j=0; j<=i; j++ ) free ( arr[j] ); 
-        free( arr ); 
-        return; 
-    } 
+        // Fehlerbehandlung
+        if(i<h){
+                printf("error: out of memory");
+                int j;
+                for ( j=0; j<=i; j++ ) free ( arr[j] );
+                free( arr );
+                return;
+        }
+
+
 
 	// Array mit leeren Daten füllen
 	int x,y;
