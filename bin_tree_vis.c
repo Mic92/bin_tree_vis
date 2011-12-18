@@ -7,12 +7,6 @@
 
 #define DEBUG 0				// Debugging Modus einschalten/auschalten
 
-/* Struktur kann auch für AVL Bäume verwendet werden, dann muss 
-; Funktion einfügen angepasst werden. Momentan wird balance einfach nicht
-; benutzt.
-*/
-
-
 /**
  * Binäre Suche. 
  * Einfach und effizient.
@@ -201,29 +195,3 @@ void print(Ptr tree){
     free(arr); // Zeilenzeiger freigeben 
 
 }
-
-
-int main(){
-	printf("Debugging is ");
-	printf(DEBUG ? "enabled" : "disabled");
-	printf("\n\n");
-	
-	// Baum initialisieren
-	Ptr tree = (Ptr) malloc(sizeof(Node));
-	tree->left = NULL;
-	tree->right = NULL;
-	tree->key = 0;	
-	
-	// Baum mit Daten füllen
-	int i;
-	for(i = 0; i<5; i++){
-		einfuegen(tree, i);
-		einfuegen(tree, -i);
-	}
-	einfuegen(tree, 3);
-
-	print(tree);
-	
-	return 1;
-}
-
