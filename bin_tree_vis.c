@@ -103,8 +103,8 @@ void print_element(Ptr tree, int **arr, int min, int max, int y){
 	arr[middle][y] = tree->key;
 	
 	// Unterbäume bearbeiten
-	print_element(tree->right , arr, middle +1, max,  y+1);
-	print_element(tree->left, arr, min, middle -1, y+1);
+	print_element(tree->left , arr, middle +1, max,  y+1);
+	print_element(tree->right, arr, min, middle -1, y+1);
 }
 
 /**
