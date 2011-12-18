@@ -6,7 +6,7 @@
 #define MAXCHAR "%02i" 		// als Zahl MAXchar eintragen
 #define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXchar passen  
 
-#define DEBUG 1
+#define DEBUG 0				// Debugging Modus einschalten/auschalten
 
 typedef struct Nodeelem *Ptr;
 typedef struct Nodeelem{
@@ -87,7 +87,9 @@ void node_del(Ptr tree, int key){
 }
 
 
-// tatsächliche(dargestellte) Breite des Baumes
+/**
+ * Gibt tatsächliche(dargestellte Breite des Baumes zurück. 
+ */ 
 int vis_width(int height){
 	int i, w=1;
 	for( i = 1; i<height; i++){
@@ -98,19 +100,24 @@ int vis_width(int height){
 }
 
 void print_element(Ptr tree, int **arr, int min, int max, int y){
+	// Rekursionsabbruch
 	if(tree == NULL)
 		return;	
-		
-	printf("printing element; element key: %i\n", tree->key);	
-	printf("min: %i, max: %i, y: %i \n", min, max, y);
-	
+
+	// Mitte vom (Teil)Baum ist Position des Wurzelelementes
 	int middle = min + (max-min+1)/2;
 	
-	printf("middle: %i \n\n", middle);
-
-		
+	// Debugging Informationen
+	if(DEBUG){		
+		printf("printing element; element key: %i\n", tree->key);	
+		printf("min: %i, max: %i, y: %i \n", min, max, y);
+		printf("middle: %i \n\n", middle);
+	}
+	
+	// Im Array Key von aktuellen Element eintragen
 	arr[middle][y] = tree->key;
 	
+	// Unterbäume bearbeiten
 	print_element(tree->right , arr, middle +1, max,  y+1);
 	print_element(tree->left, arr, min, middle -1, y+1);
 }
@@ -210,7 +217,7 @@ int main(){
 	}
 
 	// Wieder etwas löschen
-	//printf("\n\n Deleting 19 \n\n");
+	//eprintf("\n\n Deleting 19 \n\n");
 	//node_del(tree, 10);
 	
 	/*for(i = 0; i<3; i++){
