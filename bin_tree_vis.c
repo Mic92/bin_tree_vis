@@ -1,21 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "bin_tree_vis.h"
 
 #define EMPTY 1111			// Konstante, die für leere Elemente eingetragen wird; darf nicht als Element des Baumes verwendet werden
 #define MAXchar 2			// Wie viele Ziffern pro Element angezeit werden sollen
 #define MAXCHAR "%02i" 		// als Zahl MAXchar eintragen
 #define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXchar passen  
 
-#define DEBUG 1				// Debugging Modus einschalten/auschalten
+#define DEBUG 0				// Debugging Modus einschalten/auschalten
 
-typedef struct Nodeelem *Ptr;
-typedef struct Nodeelem{
-	int key;
-	int balance;
-	Ptr parent, left, right;
-	} Node;
-	
+/* Struktur kann auch für AVL Bäume verwendet werden, dann muss 
+; Funktion einfügen angepasst werden. Momentan wird balance einfach nicht
+; benutzt.
+*/
 
+
+/**
+ * Binäre Suche. 
+ * Einfach und effizient.
+ */ 
 void suche(Ptr t, int x){
 	if( t==NULL){
 		printf("%i", x);
@@ -31,6 +32,11 @@ void suche(Ptr t, int x){
 	}
 }
 
+/**
+ * Funktion zum Einfügen. 
+ * Achtung: Fügt nur an Knoten ohne Kindknoten ein, nicht für
+ * AVL Bäume geeignet.
+ */ 
 void einfuegen(Ptr t, int x){
 	Ptr q;
 	
@@ -68,12 +74,10 @@ void einfuegen(Ptr t, int x){
 	}
 }
 
-
-
 /**
  * Gibt tatsächliche(dargestellte Breite des Baumes zurück. 
  */ 
-int vis_width(int height){
+int width(int height){
 	int i, w=1;
 	for( i = 1; i<height; i++){
 		w*=2;
@@ -130,24 +134,24 @@ void print(Ptr tree){
 	
 	// Höhe und Breite berechnen
 	int h = height(tree);
-	int vis_w = vis_width(h);
+	int w = width(h);
 	
 	// Debugging Infos
 	if(DEBUG){
 		printf("calculated height:");
 		printf("%i \n", h);
-		printf("calculated vis_width:");
-		printf("%i \n", vis_w);
+		printf("calculated width:");
+		printf("%i \n", w);
 	}
 	
 	// 2 dimensionales Array dynamisch erzeugen
-	int** arr = malloc( vis_w*sizeof(int**) ); 	// erst Reihen reservieren
+	int** arr = malloc( w*sizeof(int**) ); 	// erst Reihen reservieren
     // Fehlerbehandlung
     if(!arr){ printf("error: out of memory"); return; } 
 
 	// Jetzt Zeilen reservieren
 	int i;
-    for( i=0; i<vis_w; i++ ){ 
+    for( i=0; i<w; i++ ){ 
         arr[i] = malloc( h*sizeof(int)); 
         if ( !arr[i]) break; 
     }
@@ -166,19 +170,19 @@ void print(Ptr tree){
 	// Array mit leeren Daten füllen
 	int x,y;
 	for(y = 0; y< h; y++){
-		for(x = 0; x<vis_w; x++){
+		for(x = 0; x<w; x++){
 			arr[x][y] = EMPTY;
 		}
 	}
 	
 	// Jetzt rekursiv Array mit tatsächlichen Daten füllen
-	print_element(tree, arr, 0, vis_w, 0);
+	print_element(tree, arr, 0, w, 0);
 	
 	// Array anzeigen
 	printf("\n\n");		// Leerzeilen vor Baum
 	for(i = 0; i< h; i++){
 		int k;
-		for(k = 0; k<vis_w; k++){
+		for(k = 0; k<w; k++){
 			if(arr[k][i]== EMPTY)
 				printf(EMPTY_STRING);
 			else
@@ -191,7 +195,7 @@ void print(Ptr tree){
 
 	
     // Memory Leak verhindern 
-    for ( i=0; i<vis_w; i++ ){ 
+    for ( i=0; i<w; i++ ){ 
         free(arr[i]); // Spalten freigeben 
     } 
     free(arr); // Zeilenzeiger freigeben 
@@ -212,7 +216,7 @@ int main(){
 	
 	// Baum mit Daten füllen
 	int i;
-	for(i = 0; i<3; i++){
+	for(i = 0; i<5; i++){
 		einfuegen(tree, i);
 		einfuegen(tree, -i);
 	}
