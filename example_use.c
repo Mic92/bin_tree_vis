@@ -1,4 +1,5 @@
 #include "bin_tree_vis.c"
+#include "bin_search_tree_algorithms.c"
 
 int main(){
 	printf("Debugging is ");
