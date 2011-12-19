@@ -63,36 +63,29 @@ void einfuegen(Ptr t, int x){
  * Löscht einen Knoten mit angegebenen Key.
  */ 
 void delete(Ptr *tree, int key){
-	if(*tree == NULL)
+	Ptr node = *tree;
+	
+	if(node == NULL)
 		return;
 	
-	Ptr old = *tree;
-	// Keine Kindknoten
-	if(  ((*tree)->left==NULL) && ((*tree)->right==NULL)  ){
-		if(DEBUG)
-			printf("\n Deleting node, no children \n");
+	if(node->key == key){
+		// Keine Kindknoten
+		if(  (node->left==NULL) && (node->right==NULL)  ){
 		
-		*tree = NULL;
+			*tree = NULL;
+		}else if( (node->left!=NULL) && (node->right==NULL) ){// Nur links Kind
+		
+			*tree = (*tree)->left;		
+		}else if( (node->left==NULL) && (node->right!=NULL) ){ // Nur rechtes Kind
+		
+			*tree = (*tree)->right;		
+		}else{// Zwei Kindknoten
+			*tree = (*tree)->right;		
+		}
+		free(node);
+	}else{
+		delete( &(node->left), key);
+		delete( &(node->right), key);
 	}
-	// Nur links Kind
-	if( ((*tree)->left!=NULL) && ((*tree)->right==NULL) ){
-		if(DEBUG)
-			printf("\n Deleting node, left child \n");
-		
-		*tree = (*tree)->left;		
-	}
-	// Nur rechtes Kind
-	if( ((*tree)->left==NULL) && ((*tree)->right!=NULL) ){
-		if(DEBUG)
-			printf("\n Deleting node, right child \n");
-		
-		*tree = (*tree)->right;		
-	}// Zwei Kindknoten
-	if( ((*tree)->left==NULL) && ((*tree)->right!=NULL) ){
-		if(DEBUG)
-			printf("\n Deleting node, two children \n");
-		
-		*tree = (*tree)->right;		
-	}
-	free(old);
+	
 }
