@@ -73,20 +73,16 @@ void delete(Ptr *tree, int key){
 		if(  (node->left==NULL) && (node->right==NULL)  ){
 			*tree = NULL;
 		}else if( (node->left!=NULL) && (node->right==NULL) ){// Nur links Kind
-			printf("left");
 			*tree = (*tree)->left;		
 		}else if( (node->left==NULL) && (node->right!=NULL) ){ // Nur rechtes Kind
-			printf("right");
 			*tree = (*tree)->right;		
 		}else{// Zwei Kindknoten
-			Ptr rightside = (*tree)->right;
-			
-			*tree = (*tree)->left;
-			
-			Ptr very_right = *tree;
+			Ptr rightside = node->right;			
+			*tree = node->left;
+
+			Ptr very_right = node->left;
 			while(very_right->right!=NULL)
 				very_right = very_right->right;
-			
 			very_right->right = rightside;	
 		}
 		free(node);
