@@ -38,31 +38,31 @@ void einfuegen(Ptr t, int x){
 		if(DEBUG) printf("Element schon im Baum\n");
 		return;
 	}
-	// Fall 2: Element muss links eingefügt werden
+	// Fall 2: Element muss rechts eingefügt werden
 	if(t->key > x){
 		// Fall 2a: kein Nachfolger, direktes Einfügen
-		if(t->left != NULL){
-			einfuegen(t->left, x);
+		if(t->right != NULL){
+			einfuegen(t->right, x);
 		// Fall 2b: Nachfolger vorhanden, kein direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
 			q->left = NULL;
 			q->right = NULL;
-			t->left = q;
+			t->right = q;
 		}
-	// Fall 3: Element muss rechts eingefügt werden	
+	// Fall 3: Element muss links eingefügt werden	
 	}else{
 		// Fall 3a: kein Nachfolger, direktes Einfügen
-		if(t->right != NULL){
-			einfuegen(t->right, x);
+		if(t->left != NULL){
+			einfuegen(t->left, x);
 		// Fall 3b: Nachfolger vorhanden, kein direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
 			q->left = NULL;
 			q->right = NULL;
-			t->right = q;
+			t->left = q;
 		}
 	}
 }
@@ -102,8 +102,8 @@ void print_element(Ptr tree, int **arr, int min, int max, int y){
 	arr[middle][y] = tree->key;
 	
 	// Unterbäume bearbeiten
-	print_element(tree->right , arr, middle +1, max,  y+1);
-	print_element(tree->left, arr, min, middle -1, y+1);
+	print_element(tree->left , arr, middle +1, max,  y+1);
+	print_element(tree->right, arr, min, middle -1, y+1);
 }
 
 /**

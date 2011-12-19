@@ -1,60 +1,5 @@
 #include "bin_tree_vis.c"
 
-/**
- * Gibt einen Elternknoten oder NULL zurück.
- * Je nach Baum kann der Knoten nicht eindeutig sein.
- */ 
-Ptr getParent(Ptr tree, Ptr child){
-	if(tree==NULL)
-		return NULL;
-		
-	if( (tree->left==child) ||  (tree->right==child) )
-		return tree;
-		
-	Ptr left = getParent(tree->left, child);
-	Ptr right = getParent(tree->right, child);
-	
-	if(left!=NULL)
-		return left;
-	
-	if(right!=NULL)
-		return right;
-	
-	return left;
-}
-
-/**
- * Löscht einen Knoten mit angegebenen Key.
- * Je nach Baum kann der Knoten nicht eindeutig sein.
- */ 
-int delete(Ptr *tree, int key){	
-	Ptr node = *tree;
-	
-	// kein Baum vorhanden
-	if(node == NULL)
-		return 0;
-	
-	// Node hat nicht den key 
-	if(node->key != key){
-		return delete( &(node->right), key) + delete( &(node->left), key);
-	}else{	// Node hat key
-		
-		// keine Kindknoten
-		if( (node->right) == NULL && (node->left) == NULL){
-			*tree = NULL;
-			free(node);
-		}else{ // genau zwei Kindknoten
-			*tree = node->right;
-			//(*tree)->right = node->right;
-			//(*tree)->left = node->left; // froehliches umhaengen
-			
-			free(node);
-		}
-		
-		return 1;
-	}	
-}
-
 int main(){
 	printf("Debugging is ");
 	printf(DEBUG ? "enabled" : "disabled");
@@ -92,9 +37,6 @@ int main(){
 	printf("Ein einfacher Binärer Baum");
 	print(tree);
 
-	printf("Deleting 13");
-	delete(&tree, 13);
-	print(tree);
 	
 	return 1;
 }
