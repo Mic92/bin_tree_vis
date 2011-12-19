@@ -38,7 +38,10 @@ int main(){
 	printf("Ein einfacher Binärer Baum");
 	print(tree);
 	
+	//delete(&tree, 18);
 	delete(&tree, 18);
+	delete(&tree, 17);
+
 	print(tree);
 
 	

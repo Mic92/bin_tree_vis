@@ -30,31 +30,31 @@ void einfuegen(Ptr t, int x){
 		if(DEBUG) printf("Element schon im Baum\n");
 		return;
 	}
-	// Fall 2: Element muss rechts eingefügt werden
+	// Fall 2: Element muss left eingefügt werden
 	if(t->key > x){
 		// Fall 2a: kein Nachfolger, direktes Einfügen
-		if(t->right != NULL){
-			einfuegen(t->right, x);
+		if(t->left != NULL){
+			einfuegen(t->left, x);
 		// Fall 2b: Nachfolger vorhanden, kein direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
 			q->left = NULL;
 			q->right = NULL;
-			t->right = q;
+			t->left = q;
 		}
-	// Fall 3: Element muss links eingefügt werden	
+	// Fall 3: Element muss right eingefügt werden	
 	}else{
 		// Fall 3a: kein Nachfolger, direktes Einfügen
-		if(t->left != NULL){
-			einfuegen(t->left, x);
+		if(t->right != NULL){
+			einfuegen(t->right, x);
 		// Fall 3b: Nachfolger vorhanden, kein direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
 			q->left = NULL;
 			q->right = NULL;
-			t->left = q;
+			t->right = q;
 		}
 	}
 }
@@ -71,16 +71,23 @@ void delete(Ptr *tree, int key){
 	if(node->key == key){
 		// Keine Kindknoten
 		if(  (node->left==NULL) && (node->right==NULL)  ){
-		
 			*tree = NULL;
 		}else if( (node->left!=NULL) && (node->right==NULL) ){// Nur links Kind
-		
+			printf("left");
 			*tree = (*tree)->left;		
 		}else if( (node->left==NULL) && (node->right!=NULL) ){ // Nur rechtes Kind
-		
+			printf("right");
 			*tree = (*tree)->right;		
 		}else{// Zwei Kindknoten
-			*tree = (*tree)->right;		
+			Ptr rightside = (*tree)->right;
+			
+			*tree = (*tree)->left;
+			
+			Ptr very_right = *tree;
+			while(very_right->right!=NULL)
+				very_right = very_right->right;
+			
+			very_right->right = rightside;	
 		}
 		free(node);
 	}else{
