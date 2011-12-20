@@ -7,13 +7,26 @@ int balance(Ptr node){
 	return height(node->right) - height(node->left);
 }
 
-void rot_right(Ptr tree,Ptr node){
-	printf("Not implemented yet.");
+void rot_left(Ptr tree,Ptr n){
+	
+	printf("Rotating left");
+	
+	Ptr old_root = n;
+	n = n->right;
+	
+	old_root->right = n->left;
+	n->left = old_root;
 }
 
 
-void rot_left(Ptr tree,Ptr node){
-	printf("Not implemented yet.");
+void rot_right(Ptr tree, Ptr n){
+	printf("Rotating right");
+	
+	Ptr old_root = n;
+	n = n->left;
+	
+	old_root->left = n->right;
+	n->right = old_root;
 }
 
 /**
@@ -28,22 +41,27 @@ void avl_einfuegen(Ptr t, int new_val){
 	
 	// 2.: Vorgängerknoten des neuen Knoten bestimmen und dessen balance aktualisieren
 	Ptr n = predecessor(t, new_node);
-	n->balance = balance(n);
 	
 	while(n!= NULL){
+		n->balance = balance(n);
+		
 		// 2.a) new_val wurde im linken Unterbaum eingefügt
-		if(n->right == new_node){
+		if(n->left == new_node){
+			printf("2.a), n=%i, n->balance=%i \n", n->key, n->balance);
 			if(n->balance == 1){
 				// i)
+				printf("i \n");
 				n->balance = 0;
 				return;
 			}else if(n->balance == 0){
 				// ii)
+				printf("ii \n");
 				n->balance = -1;
 				n = predecessor(t, n);
 				break;
 			}else if(n->balance == -1){
 				// iii)
+				printf("iii \n");
 				if(n->left->balance == -1)
 					rot_right(t, n);
 				else if(n->left->balance ==	1){
@@ -55,7 +73,30 @@ void avl_einfuegen(Ptr t, int new_val){
 			}	
 		}else{ 
 		// 2.b) new val wurde im rechten Unterbaum eingefügt
-			printf("Noch nicht implementiert!");
+			printf("2.b), n=%i, n->balance=%i \n", n->key, n->balance);
+			if(n->balance == -1){
+				// i)
+				printf("i \n");
+				n->balance = 0;
+				return;
+			}else if(n->balance == 0){
+				// ii)
+				printf("ii \n");
+				n->balance = 1;
+				n = predecessor(t, n);
+				break;
+			}else if(n->balance == 1){
+				// iii)
+				printf("iii \n");
+				if(n->right->balance == 1)
+					rot_left(t, n);
+				else if(n->right->balance == -1){
+					rot_right(t,n->right);
+					rot_left(t,n);
+				}	
+			}else{
+				printf("this musn't happen!");
+			}			
 		}
 	}		
 }

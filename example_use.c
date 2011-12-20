@@ -56,8 +56,25 @@ int main(){
 	printf("Vorgänger von 6 ist %i \n", (predecessor(tree, suche(tree,6)))->key);
 	printf("Vorgänger von 8 ist %i \n\n", (predecessor(tree, suche(tree,8)))->key);
 
-	//printf("AVL einfügen\n");
-	//avl_einfuegen(tree, 20);
+	
+	
+	printf("AVL-Baum: \n");
+	
+	// Wurzel erstellen
+	Ptr avl_tree = (Ptr) malloc(sizeof(Node));
+	avl_tree->key = 10;
+	avl_tree->right = NULL;
+	avl_tree->left = NULL;
+	avl_tree->balance = 0;
+	
+	// Werte einfügen
+	avl_einfuegen(avl_tree, 20);
+	
+	printf("\n\n 30 einfügen \n\n");
+	avl_einfuegen(avl_tree, 30);
+
+	
+	print(avl_tree);
 	
 	return 1;
 }
