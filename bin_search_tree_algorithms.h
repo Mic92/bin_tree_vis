@@ -7,6 +7,8 @@
 void suche(Ptr t, int x);
 void einfuegen(Ptr t, int x);
 void delete(Ptr *tree, int key);
+int max(Ptr tree);
+int min(Ptr tree);
 
  
 #endif

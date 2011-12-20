@@ -37,12 +37,17 @@ int main(){
 
 	printf("Ein einfacher Binärer Baum");
 	print(tree);
+	printf("Kleinster Wert im Baum: %i\n", min(tree));
+	printf("Größter Wert im Baum: %i \n\n", max(tree));
 	
-	delete(&tree, 15);
-	delete(&tree, 16);
+	
+	printf("Nun wird die 7 aus dem Baum gelöscht:");
+	delete(&tree, 7);
 
-
+	// Baum braucht genug Platz um angezeigt werden zu können
 	print(tree);
+
+
 
 	
 	return 1;

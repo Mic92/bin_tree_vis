@@ -92,3 +92,17 @@ void delete(Ptr *tree, int key){
 	}
 	
 }
+
+/**
+ * Gibt größten Wert im Suchbaum zurück.
+ */ 
+int max(Ptr tree){
+	return (tree->right != NULL) ? max(tree->right) : tree->key;
+}
+
+/**
+ * Gibt kleinsten Wert im Suchbaum zurück.
+ */ 
+int min(Ptr tree){
+	return (tree->left != NULL) ? min(tree->left) : tree->key;
+}
