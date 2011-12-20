@@ -1,5 +1,7 @@
 #include "bin_tree_vis.c"
 #include "bin_search_tree_algorithms.c"
+#include "avl_tree_algorithms.c"
+
 
 int main(){
 	printf("Debugging is ");
@@ -47,6 +49,8 @@ int main(){
 	// Baum braucht genug Platz um angezeigt werden zu können
 	print(tree);
 
+	printf("Balance-Faktor der Wurzel ist %i\n", balance(tree));
+	printf("Balance-Faktor vom Knoten mit Key 6 ist %i\n", balance(suche(tree, 6)));
 
 
 	

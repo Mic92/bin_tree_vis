@@ -4,7 +4,7 @@
 #include "bin_tree_vis.h"
 
 
-void suche(Ptr t, int x);
+Ptr suche(Ptr t, int x);
 void einfuegen(Ptr t, int x);
 void delete(Ptr *tree, int key);
 int max(Ptr tree);

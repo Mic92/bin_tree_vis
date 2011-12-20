@@ -4,17 +4,19 @@
 /**
  * Binäre Suche. 
  */ 
-void suche(Ptr t, int x){
+Ptr suche(Ptr t, int x){
 	if( t==NULL){
 		printf("%i", x);
 		printf(" - Nicht gefunden\n");
+		return NULL;
 	}else{
 		if(t->key == x){
-			printf("%i", x);
-			printf(" liegt im Baum\n");
+			return t;
 		}else{
-			if(t->key < x) suche(t->right, x);
-			else suche(t->left, x);
+			if(t->key < x) 
+				return suche(t->right, x);
+			else 
+				return suche(t->left, x);
 		}	
 	}
 }
