@@ -1,5 +1,11 @@
 #include "avl_tree_algorithms.h"
 
+void printd(const char *format, ...){
+	if(DEBUG){
+		//printf(format);
+	}
+}
+
 int balance(Ptr node){
 	if(node == NULL)
 		return 0;
@@ -7,26 +13,28 @@ int balance(Ptr node){
 	return height(node->right) - height(node->left);
 }
 
-void rot_left(Ptr tree,Ptr n){
+void rot_left(Ptr *n){
 	
-	printf("Rotating left");
+	printf("Rotating left \n");
 	
-	Ptr old_root = n;
-	n = n->right;
+	Ptr old_root = *n;
+	*n = (*n)->right;
+	printf("old_root: %i, new_root(n): %i \n", old_root->key, (*n)->key);
 	
-	old_root->right = n->left;
-	n->left = old_root;
+	old_root->right = (*n)->left;
+	(*n)->left = old_root;
 }
 
-
-void rot_right(Ptr tree, Ptr n){
-	printf("Rotating right");
+void rot_right(Ptr *n){
 	
-	Ptr old_root = n;
-	n = n->left;
+	printf("Rotating left \n");
 	
-	old_root->left = n->right;
-	n->right = old_root;
+	Ptr old_root = *n;
+	*n = (*n)->left;
+	printf("old_root: %i, new_root(n): %i \n", old_root->key, (*n)->key);
+	
+	old_root->left = (*n)->right;
+	(*n)->right = old_root;
 }
 
 /**
@@ -43,7 +51,6 @@ void avl_einfuegen(Ptr t, int new_val){
 	Ptr n = predecessor(t, new_node);
 	
 	while(n!= NULL){
-		n->balance = balance(n);
 		
 		// 2.a) new_val wurde im linken Unterbaum eingefügt
 		if(n->left == new_node){
@@ -63,10 +70,10 @@ void avl_einfuegen(Ptr t, int new_val){
 				// iii)
 				printf("iii \n");
 				if(n->left->balance == -1)
-					rot_right(t, n);
+					rot_right(&n);
 				else if(n->left->balance ==	1){
-					rot_left(t,n->left);
-					rot_right(t,n);
+					rot_left(&(n->left));
+					rot_right(&n);
 				}	
 			}else{
 				printf("this musn't happen!");
@@ -89,10 +96,10 @@ void avl_einfuegen(Ptr t, int new_val){
 				// iii)
 				printf("iii \n");
 				if(n->right->balance == 1)
-					rot_left(t, n);
+					rot_left(&n);
 				else if(n->right->balance == -1){
-					rot_right(t,n->right);
-					rot_left(t,n);
+					rot_right(&(n->right));
+					rot_left(&n);
 				}	
 			}else{
 				printf("this musn't happen!");
