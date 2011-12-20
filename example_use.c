@@ -50,9 +50,14 @@ int main(){
 	print(tree);
 
 	printf("Balance-Faktor der Wurzel ist %i\n", balance(tree));
-	printf("Balance-Faktor vom Knoten mit Key 6 ist %i\n", balance(suche(tree, 6)));
+	printf("Balance-Faktor vom Knoten mit Key 6 ist %i \n\n", balance(suche(tree, 6)));
 
+	printf("Vorgänger von 5 ist %i \n", (predecessor(tree, suche(tree,5)))->key);
+	printf("Vorgänger von 6 ist %i \n", (predecessor(tree, suche(tree,6)))->key);
+	printf("Vorgänger von 8 ist %i \n\n", (predecessor(tree, suche(tree,8)))->key);
 
+	//printf("AVL einfügen\n");
+	//avl_einfuegen(tree, 20);
 	
 	return 1;
 }

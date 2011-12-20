@@ -108,3 +108,20 @@ int max(Ptr tree){
 int min(Ptr tree){
 	return (tree->left != NULL) ? min(tree->left) : tree->key;
 }
+
+/**
+ * Gibt Elternknoten(Vorgängerknoten, Predecessor) eines Knotens zurück.
+ * NULL wenn kein Elternknoten gefunden wurde.
+ */ 
+Ptr predecessor(Ptr tree, Ptr node){
+	if(tree == NULL)
+		return NULL;
+	if(node == NULL)
+		return NULL;
+		
+	if( (tree->left==node) || (tree->right==node) ){
+		return tree;
+	}
+	Ptr left = predecessor(tree->left, node);
+	return  left!=NULL ? left : predecessor(tree->right, node);
+}

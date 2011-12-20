@@ -9,6 +9,6 @@ void einfuegen(Ptr t, int x);
 void delete(Ptr *tree, int key);
 int max(Ptr tree);
 int min(Ptr tree);
-
+Ptr predecessor(Ptr tree, Ptr node);
  
 #endif
