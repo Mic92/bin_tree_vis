@@ -1,23 +1,24 @@
 #include "bin_tree_vis.c"
+// Debugging aktivieren
+//#define DEBUG
 #include "bin_search_tree_algorithms.c"
 #include "avl_tree_algorithms.c"
 
-
 int main(){
-	printf("Debugging is ");
-	printf(DEBUG ? "enabled" : "disabled");
-	printf("\n\n");
-	
+#ifdef DEBUG
+        printf("Debugging is enabled");
+#endif
+
 	// Baum initialisieren
 	Ptr tree = (Ptr) malloc(sizeof(Node));
 	tree->left = NULL;
 	tree->right = NULL;
-	tree->key = 10;	
-	
+	tree->key = 10;
+
 	// Baum mit Daten füllen
 	// (Reihenfolge ist wichtig, damit ein "schöner Baum" erzeugt wird,
 	// da Baum unbalanciert ist
-	
+
 	// links
 	einfuegen(tree, 5);
 	einfuegen(tree, 3);
@@ -26,7 +27,7 @@ int main(){
 	einfuegen(tree, 6);
 	einfuegen(tree, 8);
 	einfuegen(tree, 4);
-	
+
 	// rechts
 	einfuegen(tree, 15);
 	einfuegen(tree, 13);
@@ -41,8 +42,8 @@ int main(){
 	print(tree);
 	printf("Kleinster Wert im Baum: %i\n", min(tree));
 	printf("Größter Wert im Baum: %i \n\n", max(tree));
-	
-	
+
+
 	printf("Nun wird die 7 aus dem Baum gelöscht:");
 	delete(&tree, 7);
 
@@ -56,27 +57,27 @@ int main(){
 	printf("Vorgänger von 6 ist %i \n", (predecessor(tree, suche(tree,6)))->key);
 	printf("Vorgänger von 8 ist %i \n\n", (predecessor(tree, suche(tree,8)))->key);
 
-	
-	
+
+
 	printf("AVL-Baum: \n");
-	
+
 	// Wurzel erstellen
 	Ptr avl_tree = (Ptr) malloc(sizeof(Node));
 	avl_tree->key = 10;
 	avl_tree->right = NULL;
 	avl_tree->left = NULL;
 	avl_tree->balance = 0;
-	
+
 	// Werte einfügen
-	avl_einfuegen(avl_tree, 20);	
+	avl_einfuegen(avl_tree, 20);
 	printf("\n\n 30 einfügen \n\n");
 		avl_einfuegen(avl_tree, 30);
 	print(avl_tree);
-	
-	
+
+
 	rot_left(&avl_tree);
 
 	print(avl_tree);
-	
+
 	return 1;
 }
