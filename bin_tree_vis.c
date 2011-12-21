@@ -5,16 +5,17 @@
 #define MAXCHAR "%02i" 		// als Zahl MAXchar eintragen
 #define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXchar passen
 
-// Debugging Modus einschalten/auschalten
-#ifndef DEBUG
-#define DEBUG_BIN_TREE_VIS 0
-#else
-#define DEBUG_BIN_TREE_VIS 1
-#endif
-
-// Gibt Text auf der Konsole aus, wenn DEBUG definiert ist. Benutzung siehe printf
-#define debug_print(...) \
-        do { if (DEBUG_BIN_TREE_VIS) fprintf(stderr, __VA_ARGS__); } while (0)
+//// Debugging Modus einschalten/auschalten
+//#ifndef DEBUG
+//#define DEBUG_BIN_TREE_VIS 0
+//#else
+//#define DEBUG_BIN_TREE_VIS 1
+//#endif
+//
+//// Gibt Text auf der Konsole aus, wenn DEBUG definiert ist. Benutzung siehe printf
+//#define debug_print(...) \
+//        do { if (DEBUG_BIN_TREE_VIS) fprintf(stderr, __VA_ARGS__); } while (0)
+//
 
 /**
  * Gibt tatsächliche(dargestellte Breite des Baumes zurück.
