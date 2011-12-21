@@ -17,66 +17,6 @@
         do { if (DEBUG_BIN_TREE_VIS) fprintf(stderr, __VA_ARGS__); } while (0)
 
 /**
- * Binäre Suche.
- * Einfach und effizient.
- */
-void suche(Ptr t, int x){
-	if( t==NULL){
-		printf("%i", x);
-		printf(" - Nicht gefunden\n");
-	}else{
-		if(t->key == x){
-			printf("%i", x);
-			printf(" liegt im Baum\n");
-		}else{
-			if(t->key < x) suche(t->right, x);
-			else suche(t->left, x);
-		}
-	}
-}
-
-/**
- * Funktion zum Einfügen.
- * Achtung: Nicht für AVL Bäume geeignet.
- */
-void einfuegen(Ptr t, int x){
-	Ptr q;
-
-	// Fall 1: Element schon im Baum
-	if(t->key == x){
-                debug_print("Element schon im Baum\n");
-		return;
-	}
-	// Fall 2: Element muss rechts eingefügt werden
-	if(t->key > x){
-		// Fall 2a: kein Nachfolger, direktes Einfügen
-		if(t->right != NULL){
-			einfuegen(t->right, x);
-		// Fall 2b: Nachfolger vorhanden, kein direktes Einfügen
-		}else{
-			q = (Ptr) malloc(sizeof(Node));
-			q->key = x;
-			q->left = NULL;
-			q->right = NULL;
-			t->right = q;
-		}
-	// Fall 3: Element muss links eingefügt werden
-	}else{
-		// Fall 3a: kein Nachfolger, direktes Einfügen
-		if(t->left != NULL){
-			einfuegen(t->left, x);
-		// Fall 3b: Nachfolger vorhanden, kein direktes Einfügen
-		}else{
-			q = (Ptr) malloc(sizeof(Node));
-			q->key = x;
-			q->left = NULL;
-			q->right = NULL;
-			t->left = q;
-		}
-	}
-}
-
-/**
  * Gibt tatsächliche(dargestellte Breite des Baumes zurück.
  */
 int width(int height){
@@ -109,8 +49,8 @@ void print_element(Ptr tree, int **arr, int min, int max, int y){
 	arr[middle][y] = tree->key;
 
 	// Unterbäume bearbeiten
-	print_element(tree->left , arr, middle +1, max,  y+1);
-	print_element(tree->right, arr, min, middle -1, y+1);
+	print_element(tree->right , arr, middle +1, max,  y+1);
+	print_element(tree->left, arr, min, middle -1, y+1);
 }
 
 /**
@@ -189,11 +129,11 @@ void print(Ptr tree){
 	}
 	printf("\n"); // Leerzeilen nach Baum
 
-	
-    // Memory Leak verhindern 
-    for ( i=0; i<w; i++ ){ 
-        free(arr[i]); // Spalten freigeben 
-    } 
-    free(arr); // Zeilenzeiger freigeben 
+
+    // Memory Leak verhindern
+    for ( i=0; i<w; i++ ){
+        free(arr[i]); // Spalten freigeben
+    }
+    free(arr); // Zeilenzeiger freigeben
 
 }

@@ -16,9 +16,7 @@ typedef struct Nodeelem{
 	Ptr parent, left, right;
 	} Node;
 	
- 
-void suche(Ptr, int);
-void einfuegen(Ptr, int);
+
 int  width(int);
 void print_element(Ptr, int** , int, int, int);
 int  height(Ptr tree);
