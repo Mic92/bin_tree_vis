@@ -1,21 +1,11 @@
+#include "bin_tree.h"
 #include "bin_tree_vis.h"
+#include "config.h"
 
 #define EMPTY 1111			// Konstante, die für leere Elemente eingetragen wird; darf nicht als Element des Baumes verwendet werden
 #define MAXchar 2			// Wie viele Ziffern pro Element angezeit werden sollen
 #define MAXCHAR "%02i" 		// als Zahl MAXchar eintragen
 #define EMPTY_STRING "  "	// Zeichenkette wird für leere Zellen eingesetzt, sollte von der Länge zur Konstante MAXchar passen
-
-//// Debugging Modus einschalten/auschalten
-//#ifndef DEBUG
-//#define DEBUG_BIN_TREE_VIS 0
-//#else
-//#define DEBUG_BIN_TREE_VIS 1
-//#endif
-//
-//// Gibt Text auf der Konsole aus, wenn DEBUG definiert ist. Benutzung siehe printf
-//#define debug_print(...) \
-//        do { if (DEBUG_BIN_TREE_VIS) fprintf(stderr, __VA_ARGS__); } while (0)
-//
 
 /**
  * Gibt tatsächliche(dargestellte Breite des Baumes zurück.

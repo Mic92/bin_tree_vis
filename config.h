@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 // Debugging Modus einschalten/auschalten
 #ifndef DEBUG
 // Gibt Text auf der Konsole aus, wenn DEBUG definiert ist. Benutzung siehe printf

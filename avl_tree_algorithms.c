@@ -1,4 +1,8 @@
 #include "avl_tree_algorithms.h"
+#include "bin_search_tree_algorithms.h"
+#include "bin_tree.h"
+#include "bin_tree_vis.h"
+#include "config.h"
 
 int balance(Ptr node){
 	if(node == NULL)
