@@ -1,9 +1,10 @@
 #include "bin_search_tree_algorithms.h"
-
+#include "bin_tree.h"
+#include "config.h"
 
 /**
- * Binäre Suche. 
- */ 
+ * Binäre Suche.
+ */
 Ptr suche(Ptr t, int x){
 	if( t==NULL){
 		printf("%i", x);

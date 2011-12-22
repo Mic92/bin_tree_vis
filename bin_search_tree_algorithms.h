@@ -1,8 +1,7 @@
 #ifndef BIN_SEARCH_TREE_ALGORITHMS_H
 #define BIN_SEARCH_TREE_ALGORITHMS_H
 
-#include "bin_tree_vis.h"
-#include "config.h"
+#include "bin_tree.h"
 
 Ptr suche(Ptr t, int x);
 void einfuegen(Ptr t, int x);
