@@ -4,6 +4,15 @@
 #include "bin_tree_vis.h"
 #include "config.h"
 
+void balance_all(Ptr root){
+	if(root == NULL)
+		return;
+		
+	root->balance = balance(root);
+	balance_all(root->right);
+	balance_all(root->left);	
+}
+
 int balance(Ptr node){
 	if(node == NULL)
 		return 0;
@@ -39,10 +48,13 @@ void rot_right(Ptr *n){
  * Umsetzung des Algorithmuses im Script von Prof. Dr. Vogler auf Seite 123/124.
  */
 void avl_einfuegen(Ptr t, int new_val){
+	// Erstmal nur zur Sicherheit, wird später wieder entfernt!
+	balance_all(t);
+	
 	// 1.: Knoten einfuegen
-	einfuegen(t,new_val);
+	einfuegen(t, new_val);
 
-	Ptr new_node = suche(t, new_val);
+	Ptr new_node = suche(t, new_val);	// neuen Knoten finden
 	new_node->balance = 0;
 
 	// 2.: Vorgängerknoten des neuen Knoten bestimmen und dessen balance aktualisieren

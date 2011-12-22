@@ -72,12 +72,10 @@ int main(){
 	// Werte einfügen
 	avl_einfuegen(avl_tree, 20);
 	printf("\n\n 30 einfügen \n\n");
-		avl_einfuegen(avl_tree, 30);
+	avl_einfuegen(avl_tree, 30);
 	print(avl_tree);
-
-
-	rot_left(&avl_tree);
-
+	printf("\n\n 30 einfügen \n\n");
+	avl_einfuegen(avl_tree, 40);
 	print(avl_tree);
 
 	return 1;
