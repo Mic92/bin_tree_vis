@@ -12,7 +12,7 @@ int main(){
 
 	// Baum initialisieren
 	Ptr tree = (Ptr) malloc(sizeof(Node));
-	tree->left = NULL;
+	/*tree->left = NULL;
 	tree->right = NULL;
 	tree->key = 10;
 
@@ -59,7 +59,7 @@ int main(){
 	printf("Vorgänger von 8 ist %i \n\n", (predecessor(tree, suche(tree,8)))->key);
 
 
-
+	*/
 	printf("AVL-Baum: \n");
 
 	// Wurzel erstellen
@@ -70,12 +70,10 @@ int main(){
 	avl_tree->balance = 0;
 
 	// Werte einfügen
+	printf("\n\n 20 einfügen \n\n");
 	avl_einfuegen(avl_tree, 20);
 	printf("\n\n 30 einfügen \n\n");
 	avl_einfuegen(avl_tree, 30);
-	print(avl_tree);
-	printf("\n\n 30 einfügen \n\n");
-	avl_einfuegen(avl_tree, 40);
 	print(avl_tree);
 
 	return 1;
