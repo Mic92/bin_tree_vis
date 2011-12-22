@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/** 
+#include "config.h"
+
+/**
  * Struktur kann auch für AVL Bäume verwendet werden.
  * Momentan wird balance einfach nicht benutzt.
 */

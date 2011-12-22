@@ -1,8 +1,8 @@
-#include "bin_tree_vis.c"
 // Debugging aktivieren
 //#define DEBUG
 #include "bin_search_tree_algorithms.c"
 #include "avl_tree_algorithms.c"
+#include "bin_tree_vis.c"
 
 int main(){
 #ifdef DEBUG
