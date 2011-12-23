@@ -117,6 +117,18 @@ int main(){
 	while(avl_tree->parent != NULL)
 		avl_tree = avl_tree->parent;
 	print(avl_tree);
+	
+	printf("\n\n 3 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 3);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	//printf("\n\n 33 einfügen \n\n");
+	//avl_einfuegen(&avl_tree, 33);
+	//while(avl_tree->parent != NULL)
+	//	avl_tree = avl_tree->parent;
+	//print(avl_tree);
 
 	return 1;
 }

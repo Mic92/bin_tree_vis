@@ -98,10 +98,25 @@ int sideOfTree(Ptr pre, Ptr child){
 		return LEFT;
 	}
 	
-	int l = sideOfTree(pre->left, child);
-	return (l!=NEITHER) ? l : sideOfTree(pre->right, child) ;
 	
+	if(isInTree(pre->left, child))
+		return LEFT;
+		
+	if(isInTree(pre->right, child))
+		return RIGHT;
+		
+	return NEITHER;	
 }		
+
+int isInTree(Ptr root, Ptr node){
+	if(root == NULL)
+		return 0;
+	
+	if(root == node)
+		return 1;
+		
+	return isInTree(root->right, node) || isInTree(root->left, node);
+}
 
 /**
  * Umsetzung des Algorithmuses im Script von Prof. Dr. Vogler auf Seite 123/124.
@@ -147,7 +162,6 @@ void avl_einfuegen(Ptr *root, int new_val){
 					rot_left(&(n->left));
 					rot_right(&n);
 				}
-				return;
 			}else{
 				printf("this musn't happen 1!");
 			}	
@@ -167,15 +181,16 @@ void avl_einfuegen(Ptr *root, int new_val){
 			}else if(n->balance == 1){
 				// iii)
 				printf("iii \n");
-				if(n->right->balance == 1)
+				if(n->right->balance == 1){
 					rot_left(&n);
+				 }	
 				else if(n->right->balance == -1){
 					rot_right(&(n->right));
 					rot_left(&n);
 				}
-				return;
 			}else{
 				printf("this musn't happen 2!\n");
+				return;
 			}			
 		}else{
 			printf("this musn't happen 3!\n");
