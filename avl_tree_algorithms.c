@@ -6,6 +6,20 @@
 
 enum {LEFT, RIGHT, NEITHER};
 
+void update_all_parents(Ptr root){
+	if(root == NULL)
+		return;
+		
+	if(root->left != NULL)	
+		root->left->parent = root;
+	
+	if(root->right != NULL)	
+		root->right->parent = root;
+
+	update_all_parents(root->right);
+	update_all_parents(root->left);
+}
+
 void balance_all(Ptr root){
 	if(root == NULL)
 		return;
@@ -22,8 +36,7 @@ int balance(Ptr node){
 	return height(node->right) - height(node->left);
 }
 
-void rot_left(Ptr *n, Ptr *tree_root){
-
+void rot_left(Ptr *n){
 	printf("Rotating left \n");
 
 	Ptr old_root = *n;
@@ -32,14 +45,22 @@ void rot_left(Ptr *n, Ptr *tree_root){
 
 	old_root->right = (*n)->left;
 	(*n)->left = old_root;
+		
+	(*n)->parent = old_root->parent;
+
+	old_root->parent = *n;
 	
-	if(old_root == *tree_root)
-		tree_root = n;	
+	if( (*n)->parent != NULL){
+		printf("Updating child of %i", (*n)->parent->key);
+		(*n)->parent->right = *n;
+	}	
+	
+	printf("Finished rotating \n\n");	
 }
 
-void rot_right(Ptr *n, Ptr *tree_root){
+void rot_right(Ptr *n){
 
-	printf("Rotating left \n");
+	printf("Rotating right \n");
 
 	Ptr old_root = *n;
 	*n = (*n)->left;
@@ -47,9 +68,18 @@ void rot_right(Ptr *n, Ptr *tree_root){
 
 	old_root->left = (*n)->right;
 	(*n)->right = old_root;
-		
-	if(old_root == *tree_root)
-		tree_root = n;
+	
+	
+	(*n)->parent = old_root->parent;
+
+	old_root->parent = *n;	
+			
+	if( (*n)->parent != NULL){
+		printf("Updating child of %i", (*n)->parent->key);
+		(*n)->parent->left = *n;
+	}		
+	
+	printf("Finished rotating \n\n");		
 }
 
 /**
@@ -90,7 +120,7 @@ void avl_einfuegen(Ptr *root, int new_val){
 	new_node->balance = 0;
 
 	// 2.: Vorgängerknoten des neuen Knoten bestimmen und dessen balance aktualisieren
-	Ptr n = predecessor(t, new_node);
+	Ptr n = new_node->parent;
 
 	while(n!= NULL){
 		printf("while Schleife. Aktuelles Element: % i \n",n->key);
@@ -107,20 +137,20 @@ void avl_einfuegen(Ptr *root, int new_val){
 				// ii)
 				printf("ii \n");
 				n->balance = -1;
-				n = predecessor(t, n);
+				n = n->parent;		
 			}else if(n->balance == -1){
 				// iii)
 				printf("iii \n");
 				if(n->left->balance == -1)
-					rot_right(&n, root);
+					rot_right(&n);
 				else if(n->left->balance ==	1){
-					rot_left(&(n->left), root);
-					rot_right(&n, root);
+					rot_left(&(n->left));
+					rot_right(&n);
 				}
 				// ?
-				n = predecessor(t, n);		
+				n = n->parent;		
 			}else{
-				printf("this musn't happen!");
+				printf("this musn't happen 1!");
 			}	
 		}else if(sideOfTree(n, new_node) == RIGHT){ 
 		// 2.b) new val wurde im rechten Unterbaum eingefügt
@@ -134,26 +164,29 @@ void avl_einfuegen(Ptr *root, int new_val){
 				// ii)
 				printf("ii \n");
 				n->balance = 1;
-				n = predecessor(t, n);
+				n = n->parent;		
 			}else if(n->balance == 1){
 				// iii)
 				printf("iii \n");
 				if(n->right->balance == 1)
-					rot_left(&n, root);
+					rot_left(&n);
 				else if(n->right->balance == -1){
-					rot_right(&(n->right), root);
-					rot_left(&n, root);
+					rot_right(&(n->right));
+					rot_left(&n);
 				}
 				// ?
-				n = predecessor(t, n);	
+				n = n->parent;		
 			}else{
-				printf("this musn't happen!\n");
+				printf("this musn't happen 2!\n");
 			}			
 		}else{
-			printf("this musn't happen!\n");
+			printf("this musn't happen 3!\n");
+			return;
 		}
+		printf("\n\n");
 	}		
 	printf("end while\n");
+	
 }
 
 void avl_delete(Ptr *tree, int key){

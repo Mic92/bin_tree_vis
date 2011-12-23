@@ -72,10 +72,50 @@ int main(){
 	// Werte einfügen
 	printf("\n\n 20 einfügen \n\n");
 	avl_einfuegen(&avl_tree, 20);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
 	print(avl_tree);
-		
+
 	printf("\n\n 30 einfügen \n\n");
 	avl_einfuegen(&avl_tree, 30);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+
+	printf("\n\n 50 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 50);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+
+	printf("\n\n 60 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 60);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 70 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 70);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 55 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 55);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 2 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 2);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 1 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 1);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
 	print(avl_tree);
 
 	return 1;
