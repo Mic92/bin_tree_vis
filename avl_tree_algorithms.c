@@ -51,7 +51,7 @@ void rot_left(Ptr *n){
 	old_root->parent = *n;
 	
 	if( (*n)->parent != NULL){
-		printf("Updating child of %i", (*n)->parent->key);
+		printf("Updating child of %i\n", (*n)->parent->key);
 		(*n)->parent->right = *n;
 	}	
 	
@@ -75,7 +75,7 @@ void rot_right(Ptr *n){
 	old_root->parent = *n;	
 			
 	if( (*n)->parent != NULL){
-		printf("Updating child of %i", (*n)->parent->key);
+		printf("Updating child of %i, new child is %i\n", (*n)->parent->key, (*n)->key);
 		(*n)->parent->left = *n;
 	}		
 	
@@ -147,8 +147,7 @@ void avl_einfuegen(Ptr *root, int new_val){
 					rot_left(&(n->left));
 					rot_right(&n);
 				}
-				// ?
-				n = n->parent;		
+				return;
 			}else{
 				printf("this musn't happen 1!");
 			}	
@@ -174,8 +173,7 @@ void avl_einfuegen(Ptr *root, int new_val){
 					rot_right(&(n->right));
 					rot_left(&n);
 				}
-				// ?
-				n = n->parent;		
+				return;
 			}else{
 				printf("this musn't happen 2!\n");
 			}			
