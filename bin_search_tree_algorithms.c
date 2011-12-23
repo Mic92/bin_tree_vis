@@ -35,29 +35,31 @@ void einfuegen(Ptr t, int x){
 	}
 	// Fall 2: Element muss left eingefügt werden
 	if(t->key > x){
-		// Fall 2a: kein Nachfolger, direktes Einfügen
+		// Fall 2a:  Nachfolger vorhanden, kein direktes Einfügen
 		if(t->left != NULL){
 			einfuegen(t->left, x);
-		// Fall 2b: Nachfolger vorhanden, kein direktes Einfügen
+		// Fall 2b: Kein Nachfolger, direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
 			q->left = NULL;
 			q->right = NULL;
 			t->left = q;
+			q->parent = t;
 		}
 	// Fall 3: Element muss right eingefügt werden	
 	}else{
-		// Fall 3a: kein Nachfolger, direktes Einfügen
+		// Fall 3a: Nachfolger vorhanden, kein direktes Einfügen
 		if(t->right != NULL){
 			einfuegen(t->right, x);
-		// Fall 3b: Nachfolger vorhanden, kein direktes Einfügen
+		// Fall 3b: kein Nachfolger, direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
 			q->left = NULL;
 			q->right = NULL;
 			t->right = q;
+			q->parent = t;
 		}
 	}
 }
@@ -115,12 +117,16 @@ int min(Ptr tree){
  * NULL wenn kein Elternknoten gefunden wurde.
  */ 
 Ptr predecessor(Ptr tree, Ptr node){
-	if(tree == NULL)
+	if(tree == NULL)	
 		return NULL;
 	if(node == NULL)
 		return NULL;
+	
+	printf("Finding predecessor, tree: %i, node:%i \n", tree->key, node->key);
+
 		
 	if( (tree->left==node) || (tree->right==node) ){
+		printf("returning %i\n", tree->key);
 		return tree;
 	}
 	Ptr left = predecessor(tree->left, node);
