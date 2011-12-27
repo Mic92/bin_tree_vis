@@ -30,7 +30,7 @@ void einfuegen(Ptr t, int x){
 	
 	// Fall 1: Element schon im Baum
 	if(t->key == x){
-		if(DEBUG) printf("Element schon im Baum\n");
+                debug_print("Element schon im Baum\n");
 		return;
 	}
 	// Fall 2: Element muss left eingefügt werden
