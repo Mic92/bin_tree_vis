@@ -33,12 +33,12 @@ void einfuegen(Ptr t, int x){
                 debug_print("Element schon im Baum\n");
 		return;
 	}
-	// Fall 2: Element muss left eingefügt werden
+	// Fall 2: Element muss links (*left) eingefügt werden
 	if(t->key > x){
-		// Fall 2a: kein Nachfolger, direktes Einfügen
+		// Fall 2a: Nachfolger vorhanden, kein direktes Einfügen
 		if(t->left != NULL){
 			einfuegen(t->left, x);
-		// Fall 2b: Nachfolger vorhanden, kein direktes Einfügen
+		// Fall 2b: kein Nachfolger, direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
@@ -46,12 +46,12 @@ void einfuegen(Ptr t, int x){
 			q->right = NULL;
 			t->left = q;
 		}
-	// Fall 3: Element muss right eingefügt werden	
+	// Fall 3: Element muss rechts (*right) eingefügt werden
 	}else{
-		// Fall 3a: kein Nachfolger, direktes Einfügen
+		// Fall 3a: Nachfolger vorhanden, kein direktes Einfügen
 		if(t->right != NULL){
 			einfuegen(t->right, x);
-		// Fall 3b: Nachfolger vorhanden, kein direktes Einfügen
+		// Fall 3b: kein Nachfolger, direktes Einfügen
 		}else{
 			q = (Ptr) malloc(sizeof(Node));
 			q->key = x;
