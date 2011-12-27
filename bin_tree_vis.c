@@ -32,9 +32,9 @@ void print_element(Ptr tree, int **arr, int min, int max, int y){
 	int middle = min + (max-min+1)/2;
 
 	// Debugging Informationen
-        debug_print("printing element; element key: %i\n"
-                    "min: %i, max: %i, y: %i\n"
-                    "middle: %i\n\n", tree->key, min, max, y, middle);
+        //debug_print("printing element; element key: %i\n"
+        //            "min: %i, max: %i, y: %i\n"
+        //            "middle: %i\n\n", tree->key, min, max, y, middle);
 
 	// Im Array Key von aktuellen Element eintragen
 	arr[middle][y] = tree->key;

@@ -2,8 +2,8 @@
 //#define DEBUG
 #include "avl_tree_algorithms.h"
 #include "bin_search_tree_algorithms.h"
-#include "bin_tree_vis.h"
 #include "config.h"
+#include "bin_tree_vis.h"
 
 int main(){
 #ifdef DEBUG
@@ -11,7 +11,7 @@ int main(){
 #endif
 
 	// Baum initialisieren
-	Ptr tree = (Ptr) malloc(sizeof(Node));
+	/*	Ptr tree = (Ptr) malloc(sizeof(Node));
 	tree->left = NULL;
 	tree->right = NULL;
 	tree->key = 10;
@@ -59,8 +59,8 @@ int main(){
 	printf("Vorgänger von 8 ist %i \n\n", (predecessor(tree, suche(tree,8)))->key);
 
 
-
-	printf("AVL-Baum: \n");
+	*/
+	printf("AVL-Baum mit Wurzel 10: \n");
 
 	// Wurzel erstellen
 	Ptr avl_tree = (Ptr) malloc(sizeof(Node));
@@ -70,15 +70,65 @@ int main(){
 	avl_tree->balance = 0;
 
 	// Werte einfügen
-	avl_einfuegen(avl_tree, 20);
+	printf("\n\n 20 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 20);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+
 	printf("\n\n 30 einfügen \n\n");
-		avl_einfuegen(avl_tree, 30);
+	avl_einfuegen(&avl_tree, 30);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
 	print(avl_tree);
 
-
-	rot_left(&avl_tree);
-
+	printf("\n\n 50 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 50);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
 	print(avl_tree);
+
+	printf("\n\n 60 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 60);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 70 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 70);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 55 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 55);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 2 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 2);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 1 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 1);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	printf("\n\n 3 einfügen \n\n");
+	avl_einfuegen(&avl_tree, 3);
+	while(avl_tree->parent != NULL)
+		avl_tree = avl_tree->parent;
+	print(avl_tree);
+	
+	//printf("\n\n 33 einfügen \n\n");
+	//avl_einfuegen(&avl_tree, 33);
+	//while(avl_tree->parent != NULL)
+	//	avl_tree = avl_tree->parent;
+	//print(avl_tree);
 
 	return 1;
 }
